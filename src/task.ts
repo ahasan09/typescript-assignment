@@ -27,6 +27,7 @@ export class Task {
 
 	//check task
 	check(task) {
+		task = task > 0 ? task - 1 : task;
 		let data = this.getData();
 		if (data.length && data[task]) {
 			data[task].completed = !data[task].completed;
@@ -41,10 +42,11 @@ export class Task {
 
 	//delete task
 	del(task) {
+		task = task > 0 ? task - 1 : task;
 		let data = this.getData();
 
 		//delete task
-		data.splice(task, task + 1);
+		data.splice(task, 1);
 
 		//set task on store
 		this.setData(data);

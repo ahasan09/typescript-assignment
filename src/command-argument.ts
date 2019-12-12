@@ -43,7 +43,12 @@ export class CommandArgument {
 	private taskExecutor(argc: string[]) {
 		switch (argc[1]) {
 			case CommandType.ADD:
-				this.task.add(argc[2]);
+				let task = argc[2].replace(/"/g, '');
+
+				for (let i = 3; i < argc.length; i++) {
+					task += ` ${argc[i]}`;
+				}
+				this.task.add(task);
 				break;
 			case CommandType.CHECK:
 				if (this.isValidNumber(argc[2])) this.task.check(+argc[2]);
@@ -113,7 +118,7 @@ export class CommandArgument {
 	}
 
 	private isValidTaskArgument(argc: string[]) {
-		if (!argc || argc.length !== 3) {
+		if (!argc || argc.length < 3) {
 			console.error(`\x1b[36mInvalid number of Task arguments ${argc}\x1b[0m`);
 		} else return true;
 	}
