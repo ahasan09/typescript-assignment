@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc --outDir bin"
+    "start": "tsc --outDir bin && TypeScript-Assignment"
   },
   "keywords": [
     "Typescript",

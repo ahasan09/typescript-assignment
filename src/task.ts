@@ -4,79 +4,76 @@ const appRoot = path.resolve(__dirname);
 const TASK_JSON_PATH = `${appRoot}/database.json`;
 
 export class Task {
+	constructor() {
+		if (!fs.existsSync(TASK_JSON_PATH)) {
+			console.log('Initialising storage.\n Creating `database.json` file');
+			this.setData([]);
+		}
+	}
 
-    constructor() {
-        if (!fs.existsSync(TASK_JSON_PATH)) {
-            console.log("Initialising storage.\n Creating `database.json` file");
-            this.setData([]);
-        }
-    }
+	add(task: string): void {
+		//get data
+		let data = this.getData();
 
-    add(task: string): void {
-        //get data
-        var data = this.getData();
+		//add item
+		data.push({ task: task, completed: false });
 
-        //add item
-        data.push({ task: task, completed: false });
+		//set data
+		this.setData(data);
 
-        //set data
-        this.setData(data);
+		//list
+		this.list();
+	}
 
-        //list
-        this.list();
-    }
+	//check task
+	check(task) {
+		let data = this.getData();
+		if (data.length && data[task]) {
+			data[task].completed = !data[task].completed;
 
-    //check task
-    check(task) {
-        var data = this.getData();
+			this.setData(data);
 
-        //modify the data (toggle)
-        data[task].completed = !data[task].completed;
+			this.list();
+		} else {
+			console.log('\x1b[91mNo tasks found!!\x1b[0m');
+		}
+	}
 
-        this.setData(data);
+	//delete task
+	del(task) {
+		let data = this.getData();
 
-        this.list();
-    }
+		//delete task
+		data.splice(task, task + 1);
 
-    //delete task
-    del(task) {
-        var data = this.getData();
+		//set task on store
+		this.setData(data);
 
-        //delete task
-        data.splice(task, task + 1);
+		//show all task
+		this.list();
+	}
 
-        //set task on store
-        this.setData(data);
+	//list all tasks
+	list() {
+		let data = this.getData();
+		if (data.length > 0) {
+			console.log('\x1b[93m\x1b[4mTask list:\x1b[0m');
+			data.forEach((task, index) => {
+				console.log(`${index + 1}. [${task.completed ? '\x1b[92m✓\x1b[0m' : ' '}] ${task.task}`);
+			});
+		} else {
+			console.log('\x1b[91mNo tasks added!!\x1b[0m');
+		}
+	}
 
-        //show all task
-        this.list();
-    }
+	private getData() {
+		//read file contents
+		let data = fs.readFileSync(TASK_JSON_PATH);
 
-    //list all tasks
-    list() {
-        var data = this.getData();
+		return JSON.parse(data.toString());
+	}
 
-        if (data.length > 0) {
-            //print the list. using ANSI colors and formating
-            console.log("\x1b[93m\x1b[4mTask list:\x1b[24m");
-            data.forEach(function (task, index) {
-                console.log(index + 1 + ".", " [" + (task.completed ? "\x1b[92m✓\x1b[93m" : " ") + "] ", task.task);
-            });
-
-        } else {
-            console.log("\x1b[91mNo tasks added!!");
-        }
-    }
-
-    private getData() {
-        //read file contents
-        let data = fs.readFileSync(TASK_JSON_PATH);
-
-        return JSON.parse(data.toString());
-    }
-
-    private setData(data: string[]) {
-        fs.writeFileSync(TASK_JSON_PATH, JSON.stringify(data));
-    }
-
+	private setData(data: string[]) {
+		fs.writeFileSync(TASK_JSON_PATH, JSON.stringify(data));
+	}
 }
