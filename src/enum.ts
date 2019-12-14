@@ -6,7 +6,7 @@ export enum CommandType {
     TASK = 'task',
     ADD = 'add',
     CHECK = 'check',
-    DELETE = 'delete',
+    DELETE = 'del',
     HELP = 'help',
     EXIT = 'exit'
 }

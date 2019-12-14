@@ -72,7 +72,7 @@ export class CommandArgument {
 	private usage() {
 		console.log('\x1b[32mUsage: [task|fizzbuzz|leapyear|prime|printstar|help|exit] [number]\x1b[0m');
 		console.log('\x1b[36m`fizzbuzz` can be single command without value\nfizzbuzz default value is 100.\x1b[0m');
-		console.log('\x1b[32mUsage:task [add|check|delete|help] [task]');
+		console.log('\x1b[32mUsage:task [add|check|del|help] [task]');
 		console.log('\x1b[36m`task` is only a string when using `add` and a number\nfor all other commands.\x1b[0m');
 		console.log('\x1b[36m`number` should be valid integer for all commands.\x1b[0m');
 	}
@@ -100,7 +100,7 @@ export class CommandArgument {
 				this.usage();
 				break;
 			case CommandType.EXIT:
-				process.exit(1);
+				process.exit();
 				break;
 			default:
 				console.log('\x1b[91mCommand not found!!\x1b[0m');
