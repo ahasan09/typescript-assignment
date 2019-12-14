@@ -1,9 +1,11 @@
 # TypeScript-Assignment
 ### version 0.0.1:
 ### Installation
-Here are the steps
+Install redis-server
+ * Download redis-server from this link if you don't install yet [redis-server](https://redis.io/download). Then install it on your machine and ensure it redis server is up.
 
- * install using npm ``` npm i```
+Here are the steps
+ * install dependency using npm ``` npm i```
  * add npm link using ``` npm link```
  * start programm using ``` npm start```
 

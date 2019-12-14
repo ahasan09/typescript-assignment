@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+import redis = require('redis');
 import readline = require('readline');
 import { CommandArgument } from './command-argument';
 
@@ -13,6 +13,14 @@ class Main {
 
 	constructor() {
 		this._command = new CommandArgument();
+		let client = redis.createClient();
+		client.on('connect', function() {
+			console.log('connected');
+		});
+
+		client.on('error', (err) => {
+			console.log('Error ' + err);
+		});
 	}
 
 	recursiveAsyncReadLine() {
