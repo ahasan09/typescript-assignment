@@ -1,46 +1,42 @@
-import fs = require('fs');
-import path = require('path');
-const appRoot = path.resolve(__dirname);
-const TASK_JSON_PATH = `${appRoot}/database.json`;
-import { Redis } from './redis-client';
+import { DbClient } from './db-client';
+import { DbKey } from './enum';
 
 export class Task {
-	private _redis: Redis;
+	private _dbClient: DbClient;
 
 	constructor() {
-		this._redis = new Redis();
-		if (!fs.existsSync(TASK_JSON_PATH)) {
-			console.log('Initialising storage.\n Creating `database.json` file');
-			this.setData([]);
-		}
+		this._dbClient = new DbClient();
 	}
 
-	add(task: string): void {
+	async add(task: string) {
 		if (!task.trim()) {
 			console.log('\x1b[91mTask should not be empty!!\x1b[0m');
 			return;
 		}
 		//get data
-		let data = this.getData();
+		const data = await this._dbClient.getAsync('Task');
+		const modifiedData = this.getModifedData(data);
 
 		//add item
-		data.push({ task: task, completed: false });
+		modifiedData.push({ task: task, completed: false });
 
 		//set data
-		this.setData(data);
+		this.setData(modifiedData);
 
 		//list
 		this.list();
 	}
 
 	//check task
-	check(task) {
+	async check(task) {
 		task = task > 0 ? task - 1 : task;
-		let data = this.getData();
-		if (data.length && data[task]) {
-			data[task].completed = !data[task].completed;
 
-			this.setData(data);
+		const data = await this._dbClient.getAsync('Task');
+		const modifiedData = this.getModifedData(data);
+		if (modifiedData.length && modifiedData[task]) {
+			modifiedData[task].completed = !modifiedData[task].completed;
+
+			this.setData(modifiedData);
 
 			this.list();
 		} else {
@@ -49,26 +45,28 @@ export class Task {
 	}
 
 	//delete task
-	del(task) {
+	async del(task) {
 		task = task > 0 ? task - 1 : task;
-		let data = this.getData();
+		const data = await this._dbClient.getAsync(DbKey.TASK);
+		let modifiedData = this.getModifedData(data);
 
 		//delete task
-		data.splice(task, 1);
+		modifiedData.splice(task, 1);
 
 		//set task on store
-		this.setData(data);
+		this.setData(modifiedData);
 
 		//show all task
 		this.list();
 	}
 
 	//list all tasks
-	list() {
-		let data = this.getData();
-		if (data.length > 0) {
+	async list() {
+		const data = await this._dbClient.getAsync(DbKey.TASK);
+		let modifiedData = this.getModifedData(data);
+		if (modifiedData.length > 0) {
 			console.log('\x1b[93m\x1b[4mTask list:\x1b[0m');
-			data.forEach((task, index) => {
+			modifiedData.forEach((task, index) => {
 				console.log(`${index + 1}. [${task.completed ? '\x1b[92m✓\x1b[0m' : ' '}] ${task.task}`);
 			});
 		} else {
@@ -76,14 +74,11 @@ export class Task {
 		}
 	}
 
-	private getData() {
-		//read file contents
-		let data = fs.readFileSync(TASK_JSON_PATH);
-
-		return JSON.parse(data.toString());
+	private getModifedData(data: any) {
+		return data ? JSON.parse(data) : [];
 	}
 
 	private setData(data: string[]) {
-		fs.writeFileSync(TASK_JSON_PATH, JSON.stringify(data));
+		this._dbClient.setData(DbKey.TASK, JSON.stringify(data));
 	}
 }
