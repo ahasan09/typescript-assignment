@@ -9,11 +9,12 @@ export class StairCase {
     }
 
     printStairCase(): void {
-        this.printFirstStairCase(this._num);
-        this.printSecondStairCase(this._num);
-        this.printThirdStairCase(this._num);
-        this.printFourthStairCase(this._num);
-        this.printFifthStairCase(this._num);
+        // this.printFirstStairCase(this._num);
+        // this.printSecondStairCase(this._num);
+        // this.printThirdStairCase(this._num);
+        // this.printFourthStairCase(this._num);
+        // this.printFifthStairCase(this._num);
+        this.printSixthStairCase(this._num);
     }
 
     private printFirstStairCase(num: number) {
@@ -119,5 +120,21 @@ export class StairCase {
             console.log(this.generateStars(totalLength, i))
         }
         return staris;
+    }
+
+    private printSixthStairCase(num: number) {
+        console.log(`==========StairCase ${num} for 3.6 START==========`);
+
+        console.log('A'.repeat(num - 1) + '+' + 'B'.repeat(num - 1));
+        for (let i = 2; i <= num; i++) {
+            console.log('A'.repeat(num - i) + '+' + 'E'.repeat(i * 2 - 3) + '+' + 'B'.repeat(num - i));
+        }
+
+        for (let i = 1; i < num - 1; i++) {
+            console.log('C'.repeat(i) + '+' + 'E'.repeat(2 * (num - i) - 3) + '+' + 'D'.repeat(i));
+        }
+        console.log('C'.repeat(num - 1) + '+' + 'D'.repeat(num - 1));
+
+        console.log(`==========StairCase ${num} for 3.5 END==========`);
     }
 }
