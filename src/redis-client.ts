@@ -7,12 +7,16 @@ export class Redis {
     constructor() {
         if (!instance) {
             this.client = redis.createClient();
-            this.client.on('connect', function () {
+            this.client.on('connect', () => {
                 console.log('connected');
             });
 
-            this.client.on('error', (err) => {
+            this.client.on('error', (err: any) => {
                 console.log('Error ' + err);
+            });
+
+            this.client.on('end', () => {
+                console.log('connection close');
             });
 
             instance = this;
