@@ -16,6 +16,10 @@ export class Task {
 	}
 
 	add(task: string): void {
+		if (!task.trim()) {
+			console.log('\x1b[91mTask should not be empty!!\x1b[0m');
+			return;
+		}
 		//get data
 		let data = this.getData();
 
