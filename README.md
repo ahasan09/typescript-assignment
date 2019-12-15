@@ -1,7 +1,8 @@
 # TypeScript-Assignment
 ### version 0.0.1:
 ### Installation
-Install redis-server
+Install redis-server and keep it up
+ * If you are on Windows download redis-server from this link if you don't install yet [redis-server](https://github.com/dmajkic/redis/downloads). Then install it on your machine and ensure it redis server is up.
  * Download redis-server from this link if you don't install yet [redis-server](https://redis.io/download). Then install it on your machine and ensure it redis server is up.
 
 Here are the steps

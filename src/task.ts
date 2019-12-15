@@ -2,9 +2,13 @@ import fs = require('fs');
 import path = require('path');
 const appRoot = path.resolve(__dirname);
 const TASK_JSON_PATH = `${appRoot}/database.json`;
+import { Redis } from './redis-client';
 
 export class Task {
+	private _redis: Redis;
+
 	constructor() {
+		this._redis = new Redis();
 		if (!fs.existsSync(TASK_JSON_PATH)) {
 			console.log('Initialising storage.\n Creating `database.json` file');
 			this.setData([]);

@@ -7,8 +7,14 @@
     "**/*.spec.ts"
   ],
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es6",
-    "resolveJsonModule": true
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "target": "es2015",
+    "resolveJsonModule": true,
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "module": "commonjs"
   }
 }

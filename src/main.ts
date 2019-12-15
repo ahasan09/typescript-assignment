@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import redis = require('redis');
 import readline = require('readline');
+import { Redis } from './redis-client';
 import { CommandArgument } from './command-argument';
 
 const rl = readline.createInterface({
@@ -10,17 +10,11 @@ const rl = readline.createInterface({
 
 class Main {
 	private _command: CommandArgument;
+	private _redis: Redis;
 
 	constructor() {
 		this._command = new CommandArgument();
-		let client = redis.createClient();
-		client.on('connect', function() {
-			console.log('connected');
-		});
-
-		client.on('error', (err) => {
-			console.log('Error ' + err);
-		});
+		this._redis = new Redis();
 	}
 
 	recursiveAsyncReadLine() {

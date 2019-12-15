@@ -1,5 +1,3 @@
-import { start } from "repl";
-
 export class StairCase {
     private _num: number;
 
