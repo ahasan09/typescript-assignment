@@ -9,11 +9,11 @@ export class StairCase {
     }
 
     printStairCase(): void {
-        // this.printFirstStairCase(this._num);
-        // this.printSecondStairCase(this._num);
-        // this.printThirdStairCase(this._num);
-        // this.printFourthStairCase(this._num);
-        // this.printFifthStairCase(this._num);
+        this.printFirstStairCase(this._num);
+        this.printSecondStairCase(this._num);
+        this.printThirdStairCase(this._num);
+        this.printFourthStairCase(this._num);
+        this.printFifthStairCase(this._num);
         this.printSixthStairCase(this._num);
     }
 
@@ -135,6 +135,6 @@ export class StairCase {
         }
         console.log('C'.repeat(num - 1) + '+' + 'D'.repeat(num - 1));
 
-        console.log(`==========StairCase ${num} for 3.5 END==========`);
+        console.log(`==========StairCase ${num} for 3.6 END==========`);
     }
 }

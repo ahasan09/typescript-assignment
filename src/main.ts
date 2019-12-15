@@ -21,7 +21,7 @@ class Main {
 		rl.question(`\x1b[35m\x1b[4mEnter Command [type 'help' for get all command]: \x1b[0m`, (command) => {
 			//const argc = command.split(/(\s+)/).filter((e) => e.trim());
 			const argc = command.match(/(?:[^\s"]+|"[^"]*")+/g);
-			if (argc.length) {
+			if (argc && argc.length) {
 				this._command.execute(argc);
 
 				this.recursiveAsyncReadLine();
