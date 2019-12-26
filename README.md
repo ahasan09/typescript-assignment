@@ -2,8 +2,8 @@
 ### version 0.0.1:
 ### Installation
 Install redis-server and keep it up
- * If you are on MAC download redis-server from this link [redis-server](https://github.com/dmajkic/redis/downloads), if don't install yet . Then install it on your machine and ensure that redis server is running.
- * If you are not on windows download redis-server from this link [redis-server](https://redis.io/download), if don't install yet . Then install it on your machine and ensure that redis server is running.
+ * If you are on windows download redis-server from this link [redis-server](https://github.com/dmajkic/redis/downloads), if don't install yet . Then install it on your machine and ensure that redis server is running.
+ * If you are not on mac download redis-server from this link [redis-server](https://redis.io/download), if don't install yet . Then install it on your machine and ensure that redis server is running.
 
 Here are the steps
  * install dependency using npm ``` npm i```
